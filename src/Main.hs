@@ -3,40 +3,28 @@
 
 module Main where
 
-import Prelude hiding (not, product)
-
-import System.Exit
-
-import Control.Monad
-
-import Data.Maybe
-import Data.Tuple
-import Data.List
-
-import Base
-import Lib
-import AtMostK.Binomial
-import AtMostK.Binary
-import AtMostK.Counter
-import AtMostK.Commander
-import AtMostK.Product
-
-reportConventionals :: KN -> IO ()
-reportConventionals (k, n) = do
-  -- putStrLn "binomial"; reportOf $ binomial id (literalXs n) k
-  putStrLn "binary"; reportOf $ binary id (literalXs n) k
-  putStrLn "counter"; reportOf $ counter id (literalXs n) k
-  putStrLn "commander(+counter)"; reportOf $ commanderWith counter id (literalXs n) k
-  putStrLn "product(+counter)"; reportOf $ productWith counter id (literalXs n) k
-
-reportLiterals :: KN -> IO ()
-reportLiterals (k, n) = do
-  -- putStrLn $ "binomial: " ++ (show $ sum $ map length $ binomial id (literalXs n) k)
-  putStrLn $ "binary: " ++ (show $ sum $ map length $ binary id (literalXs n) k)
-  putStrLn $ "counter: " ++ (show $ sum $ map length $ counter id (literalXs n) k)
-  -- putStrLn $ "commander(+counter): " ++ (show $ sum $ map length $ commanderWith counter id (literalXs n) k)
-  -- putStrLn $ "product(+counter): " ++ (show $ sum $ map length $ productWith counter id (literalXs n) k)
+import Data.List (nub, elemIndex)
 
 main :: IO ()
 main = do
   return ()
+
+type ScopeID = String
+
+data Var
+  = X Int
+  | Aux String
+  | Scope ScopeID Var
+   deriving (Eq, Show)
+
+type CNF = [Clause]
+type Clause = [Literal]
+type Literal = (Bool, Var)
+
+cnfToDIMACSnum :: CNF -> [[Int]]
+cnfToDIMACSnum cnf =
+  let vars = nub $ concatMap (map snd) cnf
+  in  flip map cnf \clause -> 
+        flip map clause \(b, v) -> case elemIndex v vars of
+          Just i -> (if b then 1 else -1) * i + 1
+          Nothing -> error $ "literalToDIMACSnum: variable " ++ show v ++ " not found"
