@@ -15,15 +15,11 @@ import Data.List
 
 import Base
 import Lib
-import Conventional.Binomial
-import Conventional.Binary
-import Conventional.Counter
-import Conventional.Commander
-import Conventional.Product
-import Encoding
-import Evaluation
-import Problem
-import Statistics
+import AtMostK.Binomial
+import AtMostK.Binary
+import AtMostK.Counter
+import AtMostK.Commander
+import AtMostK.Product
 
 reportConventionals :: KN -> IO ()
 reportConventionals (k, n) = do
@@ -43,6 +39,4 @@ reportLiterals (k, n) = do
 
 main :: IO ()
 main = do
-  writeProblem ((([(2,2),(2,3)],2),2),(2,2)) Nothing
-  -- writeProblems
-  -- theBestEfficiencies
+  return ()

@@ -1,4 +1,4 @@
-module Conventional.Binomial (binomial) where
+module AtMostK.Binomial (binomial) where
          
 import Prelude hiding (not)
 

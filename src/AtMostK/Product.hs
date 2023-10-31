@@ -1,7 +1,7 @@
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE BlockArguments #-}
 
-module Conventional.Product (productWith) where
+module AtMostK.Product (productWith) where
 
 import Prelude hiding (not, product)
 
@@ -12,7 +12,7 @@ import Control.Monad
 import Data.List hiding (product)
 
 import Base
-import Conventional.Binomial
+import AtMostK.Binomial
 
 xvOn :: KN -> Int -> [Int]
 xvOn (k, _) = \case
