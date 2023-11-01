@@ -34,4 +34,4 @@ solve cnf = do
   cnfToDIMACS cnf
   system "wsl -- ./minisat ./the.cnf"
   return ()
-  -- > solve $ binary id (map ((,) True . X) [1..3]) 2 ++ [[(True, X 1)],[(True, X 2)]]
+  -- > solve $ binary id (literalXs 3) 2 ++ fix True [X 1, X 2]

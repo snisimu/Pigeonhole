@@ -105,6 +105,9 @@ type CNF = [Clause]
 type Clause = [Literal]
 type Literal = (Bool, Var)
 
+literalXs :: Int -> [Literal]
+literalXs n = [ (True, X i) | i <- [1..n] ]
+
 not :: Literal -> Literal
 not (bl, v) = (Prelude.not bl, v)
 
@@ -124,3 +127,8 @@ showSIDs sIDs = if null sIDs
 type NumberConstraint
   = VarScope -> [Literal] -> Int -> CNF
 type VarScope = Var -> Var
+
+-- lib
+
+fix :: Bool -> [Var] -> CNF
+fix bl vs = [ [(bl, v)] | v <- vs ]
